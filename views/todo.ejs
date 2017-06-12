@@ -3,15 +3,19 @@
   <head>
     <title>Todo</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/table.css' />
   </head>
   <body>
-    <table style="width:50%; margin: 20px;">
+    <h3 style="margin-left: 20px;">Todo List</h3>
+    <button style="margin-left: 66%; margin-top: -10px;" type="button" onclick="addTodo()">Add Todo</button>
+    <table style="width:70%; margin: 20px;">
       <tr>
         <th>ID</th>
         <th>Title</th>
         <th>Is Complete</th>
         <th>Email</th>
         <th>Created At</th>
+        <th>Action</th>
       </tr>
       <% for(var i = 0; i < todos.length; i += 1) { %>
       <%   var todo = todos[i]; %>
@@ -24,9 +28,15 @@
           <td>
             <button type="button" onclick="editTodo('<%= todo.id %>')">Edit</button>
             <button type="button" onclick="deleteTodo('<%= todo.id %>')">Delete</button>
+            <%if (!todo.isComplete) { %>
+              <button type="button" onclick="deleteTodo('<%= todo.id %>')">Complete</button>
+            <% } else { %>
+              <button type="button" onclick="deleteTodo('<%= todo.id %>')">Uncomplete</button>
+            <% } %>
           </td>
         </tr>
       <% } %>
     </table>
+    <script src="javascripts/todo_table.js"></script>
   </body>
 </html>

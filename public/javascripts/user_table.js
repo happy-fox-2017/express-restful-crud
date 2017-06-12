@@ -11,5 +11,8 @@ var deleteUser = function (id) {
   if (deleteConfirmation) {
     window.location.href = '/users/delete/' + id;
   }
+};
 
+var viewTodo = function (userId) {
+  window.location.href = '/todos';
 };
