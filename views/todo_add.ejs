@@ -8,10 +8,11 @@
     <link href="/stylesheets/table.css" rel="stylesheet" />
   </head>
   <body>
-    <form action="/todos/add" method="POST" class="form-style-5">
+    <form action="add" method="POST" class="form-style-5">
       <fieldset>
         <legend><span class="number">1</span> Add Todo</legend>
         <input type="text" name="title" placeholder="Title">
+        <input type="hidden" name="userId" value="<%= userId %>"/>
         <input type="submit" value="Save" />
       </fieldset>
     </form>

@@ -14,5 +14,5 @@ var deleteUser = function (id) {
 };
 
 var viewTodo = function (userId) {
-  window.location.href = '/todos';
+  window.location.href = '/users/view/' + userId + '/todos';
 };
