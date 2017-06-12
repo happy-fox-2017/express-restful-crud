@@ -16,3 +16,11 @@ var deleteTodo = function (id) {
 var viewTodo = function (todoId) {
   window.location.href = 'todos';
 };
+
+var completeTodo = function (id) {
+  window.location.href = 'todos/complete/' + id;
+};
+
+var uncompleteTodo = function (id) {
+  window.location.href = 'todos/uncomplete/' + id;
+};

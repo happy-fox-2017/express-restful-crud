@@ -5,7 +5,9 @@ const models = require('../models');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  models.User.findAll()
+  models.User.findAll({
+    order: ['id']
+  })
   .then((users) => {
     res.render('user', { users });
   });

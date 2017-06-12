@@ -8,6 +8,7 @@ router.get('/users/view/:userId/todos', function (req, res, next) {
   const userId = req.params.userId;
   models.Todo.findAll(
     {
+      order: ['id'],
       include: [{
         model: models.User,
         where: { id: userId },
@@ -15,7 +16,19 @@ router.get('/users/view/:userId/todos', function (req, res, next) {
     }
   )
   .then((todos) => {
-    res.render('todo', { todos });
+    const promises = [];
+    for (let i = 0; i < todos.length; i += 1) {
+      const todo = todos[i];
+      promises.push(todo.getUser());
+    }
+
+    Promise.all(promises)
+    .then((values) => {
+      for (let i = 0; i < values.length; i += 1) {
+        todos[i].user_email = values[i].email;
+      }
+      res.render('todo', { todos });
+    });
   });
 });
 
@@ -63,7 +76,32 @@ router.post('/users/view/:userId/todos/edit/:id', function (req, res) {
 
 router.get('/users/view/:userId/todos/delete/:id', function (req, res) {
   const userId = req.params.userId;
-  models.Todo.destroy({ where: { id: req.params.id } })
+  models.Todo.update({
+
+  },
+    { where: { id: req.params.id } })
+  .then(() => {
+    res.redirect(`/users/view/${userId}/todos`);
+  });
+});
+
+router.get('/users/view/:userId/todos/complete/:id', function (req, res) {
+  const userId = req.params.userId;
+  models.Todo.update({
+    isComplete: true,
+  },
+    { where: { id: req.params.id } })
+  .then(() => {
+    res.redirect(`/users/view/${userId}/todos`);
+  });
+});
+
+router.get('/users/view/:userId/todos/uncomplete/:id', function (req, res) {
+  const userId = req.params.userId;
+  models.Todo.update({
+    isComplete: false,
+  },
+    { where: { id: req.params.id } })
   .then(() => {
     res.redirect(`/users/view/${userId}/todos`);
   });
