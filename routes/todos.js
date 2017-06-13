@@ -1,9 +1,10 @@
 var express = require('express')
 var db = require('../models')
 var router = express.Router()
-var helper = require('../helper')
+var dateHelper = require('../helpers/date')
 
 router.get('/',(req,res) => {
+  res.locals.helpers = dateHelper
   db.User.findAll({
     include : [{
       model: db.Todo
@@ -11,7 +12,6 @@ router.get('/',(req,res) => {
   })
   .then(_userTodos => {
     res.render("todos/index",{userTodos : _userTodos})
-    // res.json(_userTodos)
   })
 })
 
@@ -59,7 +59,6 @@ router.get('/edit/:id',(req,res) => {
 })
 
 router.post('/edit/:id', (req,res) => {
-  console.log(req.params);
   let _id = req.params.id
   let _task = req.body.task
   let _is_complete = req.body.status
@@ -75,7 +74,6 @@ router.post('/edit/:id', (req,res) => {
   )
   .then(todo => {
     res.redirect("/todos")
-    // res.json(todo)
   })
   .catch(err => {
     res.render("todos/edit", {err : err.message})

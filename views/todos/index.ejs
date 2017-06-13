@@ -11,7 +11,7 @@
               <% todos.forEach(todo => { %>
                 <div class="row">
                   <div class="col-md-12">
-                    <div class="panel-body"><%= todo.title %><br><span class="created-at">Created At: <%= todo.createdAt %></span>
+                    <div class="panel-body"><%= todo.title %><br><span class="created-at">Created At: <%= helpers.convertDate(todo.createdAt) %></span>
                       <div class="edit-button">
                         <a href="/todos/edit/<%= todo.id %>"><span class=" glyphicon glyphicon-pencil"></span></a>
                       </div>
