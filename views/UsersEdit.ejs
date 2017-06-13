@@ -1,0 +1,29 @@
+<% include ./partials/head %>
+  <body>
+    <div class="container">
+      <h1>Welcome <%= Users.name %></h1>
+      <div class="row">
+        <form action="/users/edit/<%=Users.id%>" method="post">
+          <div class="row">
+            <div class="input-field col s6">
+               <input type="text" name="name" id="name" value="<%= Users.name %>" placeholder="Fill Your Name"/>
+               <label for="name"> Name : </label>
+            </div>
+            <div class="input-field col s6">
+              <input type="email" name="email" id="email" class="validate" value="<%= Users.email%>" placeholder="please Input Your Email"/>
+              <label for="email" data-error="wrong" data-success="right"> Email : </label>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <button class="btn waves-effect waves-light" type="submit" name="action"><i class="material-icons right">input</i>Add Data</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <% include ./partials/scriptMaterialize %>
+  </body>
+  
+<% include ./partials/footer%>
+</html>

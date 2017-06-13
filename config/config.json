@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "antoniangga",
+    "password": null,
+    "database": "memoDB",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

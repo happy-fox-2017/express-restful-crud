@@ -1,0 +1,84 @@
+<!-- head -->
+<% include ./partials/head %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h3>Welcome To Memo</h3>
+      </div>
+      <div class="row">
+        <table class = "highlight">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>title</th>
+              <th>is_complete</th>
+              <th>email</th>
+              <th>createdAt</th>
+              <th>Author</th>
+              <th>option</th>
+            </tr>
+          <thead>
+          <tbody>
+            <% todos.forEach(todo =>{ %>
+              <tr>
+                <td><%=todo.id%></td>
+                <td><%=todo.title%></td>
+                <td><%=todo.is_complete%></td>
+                <td><%=todo.User.email%></td>
+                <td><%=helpers.displayTanggal(todo.User.createdAt)%></td>
+                <td><%=todo.User.name%></td>
+                <td>
+                  <a href="memo/edit/<%=todo.id %>" value = "edit">Edit </a> 
+                  <a href="#modal1">Delete</a>
+                  <div id="modal1" class="modal">
+                    <div class="modal-content">
+                      <h4>User</h4>
+                      <p>Do you Want to delete <%=todo.title%> ?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <a href="memo/delete/<%= todo.id %>" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+        </tbody>
+        </table>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <form class="col s12" action="/memo/add" method="post">
+          <div class="row">
+            <div class="input-field col s6">
+              <select id ="complete" name="complete">
+                <option value="" disabled selected>Choose your Complete</option>
+                <option value="Complete">Complete</option>
+                <option value="Not Complete">Not Complete</option>
+              </select>
+              <label>Complete</label>
+            </div>
+            <div class="input-field col s6">
+              <select id = "user" name="user"> 
+                <option value="" disabled selected>Choose Your User</option>
+                <% Users.forEach(User =>{ %>
+                <option value="<%=User.id%>"> <%= User.name %> </option>
+                <% }) %> </select>
+              <label>Users</label>
+            </div>
+          </div>
+          <div class="row">
+           <div class="input-field col s12">
+             <input type="text" name="title" id="title" placeholder="your task"/>
+             <label for="title">Title</label>
+           </div>
+         </div>
+         <div class="row">
+           <button class="btn waves-effect waves-light" type="submit" name="action"><i class="material-icons right">input</i>Add Data</button>
+         </div>
+        </form>
+      </div>
+    </div>
+    <% include ./partials/scriptMaterialize %>
+  </body>
+<% include ./partials/footer %>
