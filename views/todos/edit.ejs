@@ -22,7 +22,7 @@
       <div class="col-md-5">
         <div class="form-area">
 
-          <form action="/todos/create" method="post">
+          <form action="/todos/edit/" method="post">
             <h3 style="margin-bottom: 25px; text-align: center;">Make your todo</h3>
             <div class="form-group">
               Email:<br>
@@ -37,9 +37,8 @@
             <div class="form-group">
             <% users.forEach(user => { %>
               <%  if (user.Todos.length != 0) { %>
-
-                  <textarea name="task" class="form-control" type="textarea" id="message" placeholder="your todo here..." maxlength="140" rows="4" value=""><%= user.Todos[0].title %></textarea>
-
+                <p><%=user_id%></p>
+                  <textarea name="task" class="form-control" type="textarea" id="message" placeholder="your todo here..." maxlength="140" rows="4" value=""><%= user.Todos[0].title  %></textarea>
               <%  } %>
            <%  }) %>
               <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>

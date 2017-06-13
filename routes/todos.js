@@ -36,6 +36,7 @@ router.post('/create', (req,res) => {
 
 router.get('/edit/:id',(req,res) => {
   let _id = req.params.id
+  let _user_id;
   db.User.findAll(
     {
     include : [{
@@ -45,8 +46,12 @@ router.get('/edit/:id',(req,res) => {
     }]
   }
 ).then(_users => {
-    res.render('todos/edit', {users: _users})
-    // res.json(_users)
+    _users.forEach(user => {
+      if (user.Todos.length != 0) {
+        _user_id = user.id
+      }
+    })
+    res.render('todos/edit', {users: _users, user_id: _user_id})
   })
 })
 
