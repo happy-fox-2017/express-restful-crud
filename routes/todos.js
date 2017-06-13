@@ -25,18 +25,21 @@ router.get('/create', (req,res) => {
 router.post('/create', (req,res) => {
   let _email = req.body.email
   let _task = req.body.task
-  db.Todo.create({email:_email, task:_task})
-  .then(() => {
-    res.redirect('/todos')
-  })
-  .catch(err => {
-    console.log(err);
+  db.User.findOne({where : {email : _email}})
+  .then(user => {
+    db.Todo.create({UserId:user.id, title:_task})
+    .then(() => {
+      res.redirect('/todos')
+    })
+    .catch(err => {
+      console.log(err);
+    })
   })
 })
 
 router.get('/edit/:id',(req,res) => {
   let _id = req.params.id
-  let _user_id;
+  let _user;
   db.User.findAll(
     {
     include : [{
@@ -48,43 +51,39 @@ router.get('/edit/:id',(req,res) => {
 ).then(_users => {
     _users.forEach(user => {
       if (user.Todos.length != 0) {
-        _user_id = user.id
+        _user = user
       }
     })
-    res.render('todos/edit', {users: _users, user_id: _user_id})
+    res.render('todos/edit', {users: _users, user: _user})
   })
 })
 
 router.post('/edit/:id', (req,res) => {
+  console.log(req.params);
   let _id = req.params.id
   let _task = req.body.task
   let _is_complete = req.body.status
+
   db.Todo.update(
     {
-      where:{id:_id}
-    },{
-      task : _task,
+      title : _task,
       is_complete : _is_complete
+    },
+    {
+      where:{id:_id}
     }
   )
   .then(todo => {
     res.redirect("/todos")
+    // res.json(todo)
   })
   .catch(err => {
     res.render("todos/edit", {err : err.message})
   })
 })
 
-router.get('/delete/:id',(req,res) => {
-  let _id = req.params.id
-  db.Todo.findOne({where:{id:_id}, include :[{model:db.User}]})
-  .then(function (_todo) {
-    // res.render('todos/delete',{todo:_todo})
-    res.json(_todo)
-  })
-})
 
-router.post('/delete/:id', (req,res) => {
+router.get('/delete/:id', (req,res) => {
   let _id = req.params.id
   db.Todo.destroy({
     where : {id:_id}
