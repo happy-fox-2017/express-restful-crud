@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<%include ./partials/head %>
+  <body>
+    <div class="container">
+      <h1>Welcome to Edit Memo</h1>
+      <br>
+      <div class="row">
+        <form class="col s12" action="/memo/edit/<%=todo.id%>" method="post">
+          <div class="row">
+            <div class="input-field col s6">
+              <select id ="complete" name="complete">
+                <option value="Complete" <%= (todo.is_complete == "Complete") ? "selected" : '' %> > Complete </option>
+                <option value="Not Complete" <%= (todo.is_complete == "Not Complete") ? "selected" : '' %> > Not Complete</option>
+              </select>            
+              <label>Complete</label>
+            </div>
+            <div class="input-field col s6">
+              <select id = "user" name="user"> 
+                <% Users.forEach(user =>{ %>
+                <option value="<%=user.id%>" <%= (user.name == todo.User.name) ? "selected" : "" %> > <%= user.name %> </option>
+                <% }) %> </select>
+              <label>Users</label>
+            </div>
+          </div>
+          <div class="row">
+           <div class="input-field col s12">
+             <input type="text" name="title" id="title" placeholder="your task" value="<%=todo.title%>"/>
+             <label for="title">Title</label>
+           </div>
+         </div>
+         <div class="row">
+           <button class="btn waves-effect waves-light" type="submit" name="action"><i class="material-icons right">input</i>Add Data</button>
+         </div>
+        </form>
+      </div>
+    </div>
+    <% include ./partials/scriptMaterialize %>
+  </body>
+<% include ./partials/footer %>

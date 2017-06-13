@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<% include ./partials/head %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h1>Welcome to User Page</h1>
+      </div>
+      <div class="row">
+        <table class="highlight">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>name</th>
+              <th>email</th>
+              <th>option</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%Users.forEach(user => { %>
+              <tr>  
+                  <td> <%= user.id %> </td>
+                  <td> <%= user.name %> </td>
+                  <td> <%= user.email %> </td>
+                  <td><a href="users/edit/<%=user.id%>"> Edit </a> 
+                    <a href="#modal1">Delete</a>
+                    <div id="modal1" class="modal">
+                      <div class="modal-content">
+                        <h4>User</h4>
+                        <p>Do you Want to delete <%=user.name%> ?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <a href="users/delete/<%=user.id%>" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                      </div>
+                    </div>
+                  </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <form action="/users/add/" method="post">
+          <div class="row">
+            <div class="input-field col s6">
+               <input type="text" name="name" id="name" placeholder="Fill Your Name"/>
+               <label for="name"> Name : </label>
+            </div>
+            <div class="input-field col s6">
+              <input type="email" name="email" id="email" class="validate" placeholder="please Input Your Email"/>
+              <label for="email" data-error="wrong" data-success="right"> Email : </label>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <button class="btn waves-effect waves-light" type="submit" name="action"><i class="material-icons right">input</i>Add Data</button>
+          </div>
+        </form> 
+      </div>
+    </div>
+    <% include ./partials/scriptMaterialize %>
+  </body>
+  <% include ./partials/footer %>
