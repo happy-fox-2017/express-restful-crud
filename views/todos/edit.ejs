@@ -21,19 +21,27 @@
     <div class="container">
       <div class="col-md-5">
         <div class="form-area">
-          <p>  <%-JSON.stringify(todo)%></p>
 
           <form action="/todos/create" method="post">
             <h3 style="margin-bottom: 25px; text-align: center;">Make your todo</h3>
             <div class="form-group">
               Email:<br>
-
-
+              <select name="email" class="form-control">
+                <%  users.forEach(user => { %>
+                  <option value="<%=user.email%>"><%=user.email%></option>
+                  <%  }) %>
+                </select>
             </div>
             <br>
             Your task:<br>
             <div class="form-group">
-              <textarea name="task" class="form-control" type="textarea" id="message" placeholder="your todo here..." maxlength="140" rows="4"></textarea>
+            <% users.forEach(user => { %>
+              <%  if (user.Todos.length != 0) { %>
+
+                  <textarea name="task" class="form-control" type="textarea" id="message" placeholder="your todo here..." maxlength="140" rows="4" value=""><%= user.Todos[0].title %></textarea>
+
+              <%  } %>
+           <%  }) %>
               <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
             </div>
             <br><br>

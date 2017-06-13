@@ -36,10 +36,17 @@ router.post('/create', (req,res) => {
 
 router.get('/edit/:id',(req,res) => {
   let _id = req.params.id
-  db.Todo.findOne({where:{id:_id}, include :[{model:db.User}]})
-  .then(function (_todo) {
-    res.render('todos/edit',{todo:_todo})
-    // res.json(_todo)
+  db.User.findAll(
+    {
+    include : [{
+      model: db.Todo,
+      where : {id : _id},
+      required : false
+    }]
+  }
+).then(_users => {
+    res.render('todos/edit', {users: _users})
+    // res.json(_users)
   })
 })
 
@@ -59,7 +66,7 @@ router.post('/edit/:id', (req,res) => {
     res.redirect("/todos")
   })
   .catch(err => {
-    res.render("/todos/edit", {err : err.message})
+    res.render("todos/edit", {err : err.message})
   })
 })
 
