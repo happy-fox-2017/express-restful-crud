@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Simple Memo</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 align='center'>Your Memo's</h2>
+          <hr>
+          <form action="/users/add" method="post">
+            <div class="panel panel-default">
+            <div class="panel-heading">Panel heading</div>
+            <table class="table">
+              <tr>
+                <th>No</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Action</th>
+              </tr>
+              <% no = 1 %>
+              <%
+               alltodo.forEach((value)=>{
+              %>
+              <tr>
+                <td><%= no %></td>
+                <td><%= value.id %></td>
+                <td><%= value.user.name %></td>
+                <td><%= value.title %></td>
+                <td><%= value.is_complete %></td>
+                <td><%= value.user.email %></td>
+                <td><%= helper.dateFormat(value.createdAt) %></td>
+                <td><%= helper.dateFormat(value.updatedAt) %></td>
+                <td><a href="/shows/edit/<%=value.id%>">EDIT</a> | <a href="/shows/delete/<%=value.id%>" onclick="confirm('Are you Sure want to delete?')">DELETE</a></td>
+              </tr>
+              <% no++ %>
+              <%
+                })
+              %>
+            </table>
+          </div>
+          <a class="btn btn-primary" href="/" role="button">Back To Home</a>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
