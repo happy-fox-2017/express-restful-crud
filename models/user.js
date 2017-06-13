@@ -9,8 +9,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-
-  sequelize.models.Todo.belongsTo(User);
-
   return User;
 };

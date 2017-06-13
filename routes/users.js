@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     order: ['id']
   })
   .then((users) => {
-    res.render('user', { users });
+    res.render('user', { users, pageTitle: 'User List' });
   });
 });
 

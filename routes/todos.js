@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const models = require('../models');
+const dateHelper = require('../helpers/DateHelper');
 
 /* GET todos listing. */
 router.get('/users/view/:userId/todos', function (req, res, next) {
@@ -27,7 +28,12 @@ router.get('/users/view/:userId/todos', function (req, res, next) {
       for (let i = 0; i < values.length; i += 1) {
         todos[i].user_email = values[i].email;
       }
-      res.render('todo', { todos });
+
+      const formattedTodos = todos.map((todo) => {
+        todo.formattedCreatedAt = dateHelper.convertDate(todo.createdAt);
+        return todo;
+      });
+      res.render('todo', { todos: formattedTodos, pageTitle: 'Todo List' });
     });
   });
 });
@@ -39,7 +45,6 @@ router.get('/users/view/:userId/todos/add', function(req, res, next) {
 
 router.post('/users/view/:userId/todos/add', function (req, res) {
   const userId = req.body.userId;
-  console.log('-------------->', userId);
   models.Todo.create({
     title: req.body.title,
     isComplete: false,
@@ -49,8 +54,9 @@ router.post('/users/view/:userId/todos/add', function (req, res) {
       where: { id: userId },
     })
     .then((user) => {
-      user.addTodo(todo);
-      res.redirect(`/users/view/${userId}/todos`);
+      user.addTodo(todo).then(() => {
+        res.redirect(`/users/view/${userId}/todos`);
+      });
     });
   });
 });
@@ -76,10 +82,7 @@ router.post('/users/view/:userId/todos/edit/:id', function (req, res) {
 
 router.get('/users/view/:userId/todos/delete/:id', function (req, res) {
   const userId = req.params.userId;
-  models.Todo.update({
-
-  },
-    { where: { id: req.params.id } })
+  models.Todo.destroy({ where: { id: req.params.id } })
   .then(() => {
     res.redirect(`/users/view/${userId}/todos`);
   });

@@ -6,7 +6,7 @@
     <link rel='stylesheet' href='/stylesheets/table.css' />
   </head>
   <body>
-    <h3 style="margin-left: 20px;">Todo List</h3>
+    <%- include('partials/page_title'); %>
     <button style="margin-left: 66%; margin-top: -10px;" type="button" onclick="addTodo()">Add Todo</button>
     <table style="width:70%; margin: 20px;">
       <tr>
@@ -24,7 +24,7 @@
           <td><%= todo.title %></td>
           <td><%= todo.isComplete %></td>
           <td><%= todo.user_email %></td>
-          <td><%= todo.createdAt %></td>
+          <td><%= todo.formattedCreatedAt %></td>
           <td>
             <button type="button" onclick="editTodo('<%= todo.id %>')">Edit</button>
             <button type="button" onclick="deleteTodo('<%= todo.id %>')">Delete</button>
@@ -37,6 +37,7 @@
         </tr>
       <% } %>
     </table>
+    <a href="/users" style="margin-left: 20px;">Back to Users</a>
     <script src="/javascripts/todo_table.js"></script>
   </body>
 </html>
