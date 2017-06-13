@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include partials/head.ejs %>
+  </head>
+  <body>
+    <% include partials/header.ejs %>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1>Add new task:</h1>
+          <a class="btn btn-primary btn-md" href="/create" role="button"> Click Here</a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1>Here are your tasks:</h1>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class = "table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>User Email</th>
+                <th>Option</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%
+              let hitung = 1;
+              todos.forEach(todo => {
+                let status;
+                let option;
+                if(todo.is_complete) {
+                  status = 'done'
+                  option = 'Undone'
+                } else {
+                  status = 'incomplete'
+                  option = 'Done'
+                }
+              %>
+              <tr>
+                <td><%- hitung %></td>
+                <td><%- todo.title %></td>
+                <td><%- status %></td>
+                <td><%- util.dateParser(todo.createdAt) %></td>
+                <td><%- todo.User.email %></td>
+                <!-- <td></td> -->
+                <td><a class="btn btn-danger btn-sm" href=/tasks/delete/<%-todo.id%> role="button" onclick="return confirm('Are you sure')">Delete</a> <a class="btn btn-success btn-sm" href=/tasks/edit/<%-todo.id%> role="button">Edit</a></td>
+              </tr>
+              <%
+                hitung++;
+                });
+              %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% include partials/footer.ejs %>
+  </body>
+</html>

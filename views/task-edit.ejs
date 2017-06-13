@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include partials/head.ejs %>
+  </head>
+  <body>
+    <% include partials/header.ejs %>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1>Edit task:</h1>
+          <form method="post">
+            <p>Title:
+            <input type="text" name="task" value="<%- todo.title %>"></p>
+            <p>Status:
+            <label class="radio-inline"><input type="radio" name="is_complete" value="true">Completed</label>
+            <label class="radio-inline"><input type="radio" name="is_complete" value="false">Not Completed</label></p>
+            <button type="submit" name="button">Edit Task</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% include partials/footer.ejs %>
+  </body>
+</html>
