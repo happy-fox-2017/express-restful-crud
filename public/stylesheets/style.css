@@ -1,0 +1,26 @@
+body {
+  padding: 0 50px 0 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.daftar {
+  margin-top: 20px;
+}
+
+footer {
+  margin-top: 50px;
+  padding: 5px;
+  background-color: #e7e7e7;
+  font-family: serif;
+  text-align: center;
+}
+.social {
+  padding-top: 10px;
+}
+.social img {
+  height: 20px;
+}
