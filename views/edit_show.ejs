@@ -21,24 +21,24 @@
           <h2 align='center'>Write Your Memo's</h2>
           <hr>
           <form action="/shows/edit/<%= edit_data_memo.id%>" method="post">
-            <textarea name="title" rows="8" cols="80"><%=edit_data_memo.title %>></textarea>
+            <textarea name="title" rows="8" cols="80"><%=edit_data_memo.title %></textarea>
             <div class="form-group">
               <select name="is_complete">
                   <option value="<%=edit_data_memo.is_complete %>"><%=edit_data_memo.is_complete %></option>
                   <%if (edit_data_memo.is_complete === "completed") { %>
-                      <option value="uncomplete">uncomplete</option>
+                      <option value="uncomplete"><%=edit_data_memo.is_complete %></option>
                     <%} else {%>
-                      <option value="complete">complete</option>
+                      <option value="complete"><%=edit_data_memo.is_complete %></option>
                     <%
                       }
                     %>
               </select>
               <select name='id_user' required>
-                   <option value='' disabled selected>Choose email</option>
+                   <option value='' selected>Choose email</option>
                    <%
                       users.forEach(value => {
                    %>
-                   <option value='<%= value.id %>'><%= value.email %></option>
+                   <option value='<%= value.id %>' <%= (edit_data_memo.user.email == value.email) ? "selected" : "" %>> <%= value.email %> </option>
                    <%
                       });
                    %>

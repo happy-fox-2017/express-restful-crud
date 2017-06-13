@@ -4,6 +4,7 @@ const db = require('../models');
 var helper = require('../helpers/helper');
 
 router.get('/show',(req,res,next) =>{
+  res.locals.helper = helper
   db.todo.findAll({
       include: {model: db.user}
     })
