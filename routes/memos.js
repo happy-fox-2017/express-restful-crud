@@ -88,7 +88,8 @@ router.post('/setting', function(req, res, next) {
         res.redirect('/memos')
       })
     } else {
-      res.redirect('/error')
+      let err = new Error ('User invalid!')
+      next(err)
     }
   })
 })
