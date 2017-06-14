@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  %include ./patials/header%>
+  <body>
+    <h1>Create</h1>
+    <form class="" action="/memos/create" method="post">
+      <label for="">todo:</label><input type="text" name="todo" value="">
+      <select class="" name="user">
+        <option value="" disabled selected>Enter User</option>
+        <% users.forEach(user => {%>
+        <option value="<%= user.id %>"><%= user.name %></option>
+        <% }) %>
+      </select>
+      <input type="submit" name="" value="Submit">
+    </form>
+    <a href="/">
+      <button type="button" name="button">Home</button>
+    </a>
+  </body>
+</html>

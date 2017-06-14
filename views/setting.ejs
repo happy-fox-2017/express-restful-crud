@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+%include ./patials/header%>
+
+<body>
+  <h1>Edit</h1>
+  <form class="" action="/memos/setting" method="post">
+    <input type="checkbox" name="completion" value="" <%= (todo.completion) ? "checked" : "" %> >
+    <label for="">Memo</label><input type="text" name="todo" value="<%=todo.title%>">
+    <select class="" name="user_id">
+        <option value="<%= todo.User.id %>" selected><%= todo.User.name %></option>
+        <% users.forEach(user => { %>
+          <option value="<%= user.id %>"> <%= user.name %></option>
+        <% }) %>
+      </select>
+    <input type="submit" name="option" value="Edit">
+    <input type="submit" name="option" value="Delete">
+  </form>
+</body>
+
+</html>
