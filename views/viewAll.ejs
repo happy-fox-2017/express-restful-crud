@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Memos</title>
+  </head>
+  <body>
+    <h1>Memo</h1>
+    <table>
+      <thead>
+        <th>No</th>
+        <th>Title</th>
+        <th>Completion</th>
+        <th>User email</th>
+        <th>Created date</th>
+        <th>Option</th>
+      </thead>
+      <tbody>
+        <% let no = 1 %>
+        <% data.forEach((d) => { %>
+        <tr>
+          <td><%=no%></td>
+          <td><%=d.title%></td>
+          <td><%=d.completion%></td>
+          <td><%=d.User.email%></td>
+          <td><%=help.dateing(d.createdAt)%></td>
+          <td>
+            <a href="/memos/setting/<%= d.id%>">Setting</a>
+          </td>
+        </tr>
+        <% no++ %>
+        <% }) %>
+      </tbody>
+    </table>
+    <a href="/">
+      <button type="button" name="button">Back</button>
+    </a>
+  </body>
+</html>
