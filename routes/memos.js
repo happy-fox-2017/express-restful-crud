@@ -43,6 +43,10 @@ router.post('/create', function(req, res, next) {
     .then(() => {
       res.redirect('/')
     })
+    .catch(() => {
+      let err = new Error('Specify user')
+      next(err)
+    })
 })
 
 router.get('/setting/:id', function(req, res, next) {
@@ -72,38 +76,59 @@ router.get('/setting/:id', function(req, res, next) {
 router.post('/setting', function(req, res, next) {
   // res.json(req.body)
   let body = req.body
-  db.Todo.findOne({
-    where: {
-      title: body.todo
-    }
-  })
-  .then(memo => {
-    // res.json(body)
-    if (memo.userId == body.user_id) {
-      memo.updateAttributes({
-        title: body.todo,
-        completion: (body.completion === '') ? true : false
-      })
-      .then(() => {
-        res.redirect('/memos')
-      })
-    } else {
-      let err = new Error ('User invalid!')
-      next(err)
-    }
-  })
+  if (body.option == 'Edit') {
+    db.Todo.findOne({
+      where: {
+        title: body.todo
+      }
+    })
+    .then(memo => {
+      // res.json(body)
+      if (memo.userId == body.user_id) {
+        memo.updateAttributes({
+          title: body.todo,
+          completion: (body.completion === '') ? true : false
+        })
+        .then(() => {
+          res.redirect('/memos')
+        })
+      } else {
+        let err = new Error ('User invalid!')
+        next(err)
+      }
+    })
+  } else if (body.option == 'Delete') {
+    db.Todo.findOne({
+      where: {
+        title: body.todo
+      }
+    }).then((memo) => {
+      if (memo.userId == body.user_id) {
+        db.Todo.findById(memo.id)
+        .then((memo) => {
+          return memo.destroy()
+        })
+        .then(() => {
+          res.redirect('/memos')
+        })
+      } else {
+        let err = new Error ('User invalid!')
+        next(err)
+      }
+    })
+  }
 })
 
-router.get('/delete/:id', (req, res) => {
-  let _id = req.params.id
-  db.Todo.findById(_id)
-  .then((memo) => {
-    return memo.destroy()
-  })
-  .then(() => {
-    res.redirect('/memos')
-  })
-})
+// router.get('/delete/:id', (req, res) => {
+//   let _id = req.params.id
+//   db.Todo.findById(_id)
+//   .then((memo) => {
+//     return memo.destroy()
+//   })
+//   .then(() => {
+//     res.redirect('/memos')
+//   })
+// })
 
 
 
