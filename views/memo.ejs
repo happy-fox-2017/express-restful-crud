@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+<h1>SHORT URL </h1>
+<form action="/urls" method="post">
+  <label for="url">Adding url:</label>
+  <input type="text" name="url" id="url">
+  <button type="submit">Submit</button>
+</form>
+<br>
+<body>
+  <h4>New MEMO</h4>
+  <form action="/memo" method="post">
+      <input type="text" id="memo" name="memo">
+      <button type="submit">Submit</button>
+  </form>
+  <br><br>
+  <h3>TODO LIST</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Complete Data</th>
+        <th>CreatedAt</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach((d) => {  %>
+        <tr>
+          <td>
+            <%= d.title %>
+          </td>
+          <% if (d.is_complete == null || d.is_complete == false) {%>
+            <td>notdoneyet</td>
+            <% } else { %>
+              <td>done</td>
+              <% } %>
+                <td>
+                  <%= helper.formatDate(d.createdAt) %>
+                </td>
+                <td>
+                  <a href='/memo/edit/<%= d.id %>'>edit</a>
+                  <a href="#modal<%= d.id %>">delete</a>
+                </td>
+        </tr>
+
+<!--  DELETE -->
+        <%= d.id %>
+          <h5>Delete this memo?</h5>
+          <p>
+            <%= d.title %>
+          </p>
+          <a href="#!">no</a>
+          <a href="/memo/delete/<%= d.id %>" method="post">okay</a>
+          <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>
