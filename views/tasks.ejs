@@ -1,0 +1,68 @@
+<%- include ./partials/header.ejs %>
+  <body>
+    <div class="container">
+      <h4>New Task</h4>
+      <form class="/tasks" action="" method="post">
+        <div class="row">
+          <div class="input-field col s6">
+            <input type="text" id="task" name="task" value="" required class="validate">
+            <label for="task">Task</label>
+          </div>
+          <div class="input-field col s6">
+            <select name="UserId">
+              <option value="" disabled selected>Choose email to asign this task</option>
+              <% for(let i=0; i<users.length; i++) {%>
+              <option value="<%= users[i].id %>"><%= users[i].email %></option>
+              <% } %>
+            </select>
+
+          </div>
+        </div>
+        <button class="waves-effect waves-light btn" type="submit">Submit</button>
+      </form>
+      <br><br>
+
+      <hr style="margin-bottom: 40px">
+      <h3>TODO LIST</h3>
+      <table class="striped">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Completeness</th>
+            <th>User Email</th>
+            <th>CreatedAt</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach((element) => {  %>
+          <tr>
+            <td class="titleTodo"><%= element.title %></td>
+            <% if (element.is_complete == null || element.is_complete == false) {%>
+              <td>belum selesai</td> <% } else { %>
+              <td>selesai</td> <% } %>
+            <% if (element.User !== null) {%>
+            <td><%= element.User.email %></td><% } else { %>
+            <td>-</td> <% } %>
+            <td><%= helper.formatDate(element.createdAt) %></td>
+            <td>
+              <a href='/tasks/edit/<%= element.id %>'>edit</a>
+              <a href="/tasks/delete/<%= element.id %>">delete</a>
+            </td>
+          </tr>
+          </div>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+      <script>$(document).ready(function() {
+    $('select').material_select();
+  });</script>
+    </body>
+  </body>
+
+</html>
