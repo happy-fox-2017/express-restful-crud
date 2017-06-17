@@ -1,0 +1,46 @@
+<%- include ./partials/header.ejs %>
+  <body>
+    <div class="container main">
+      <div class="row">
+        <h1 class="text-center title">Todo Apps</h1>
+          <% userTodos.forEach(userTodo => { %>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+              <div class="text-center panel-heading"><%=  userTodo.email %></div>
+              <% var todos = userTodo.Todos %>
+              <% todos.forEach(todo => { %>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel-body"><%= todo.title %><br><span class="created-at">Created At: <%= helpers.convertDate(todo.createdAt) %></span>
+                      <div class="edit-button">
+                        <a href="/todos/edit/<%= todo.id %>"><span class=" glyphicon glyphicon-pencil"></span></a>
+                      </div>
+                      <div class="close-button">
+                        <a href="/todos/delete/<%= todo.id%>"><span class="glyphicon glyphicon-remove close-button"></span></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <% }) %>
+            </div>
+          </div>
+          <% }) %>
+          <a href="/todos/create">
+            <button type="button" class="btn btn-default btn-lg">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+          </a>
+
+
+
+
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

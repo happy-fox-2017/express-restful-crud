@@ -1,0 +1,44 @@
+<%- include ./partials/header.ejs %>
+  <body>
+    <div class="container">
+      <div class="col-md-5">
+        <div class="form-area">
+          <p>User id nya<%= user.Todos[0].id %></p>
+
+          <form action="/todos/edit/<%= user.Todos[0].id %>" method="post">
+            <h3 style="margin-bottom: 25px; text-align: center;">Make your todo</h3>
+            <div class="form-group">
+              Email:<br>
+              <select name="email" class="form-control">
+                <%  users.forEach(u => { %>
+                  <% if (u.email == user.email) { %>
+                      <option value="<%=u.email%>" selected><%=u.email%></option>
+                  <% } else { %>
+                      <option value="<%=u.email%>"><%=u.email%></option>
+                  <% } %>
+                <% }) %>
+                  </select>
+            </div>
+            <br>
+            <div class="from-group">
+              is complete ?
+              <select name="status" class="form-control">
+                  <option value="<%=user.Todos[0].is_complete%>" selected><%=user.Todos[0].is_complete%></option>
+                  <option value="<%=!user.Todos[0].is_complete%>"><%=!user.Todos[0].is_complete%></option>
+                </select>
+            </div>
+            <br>
+            Your task:<br>
+            <div class="form-group">
+                  <textarea name="task" class="form-control" type="textarea" id="message" placeholder="your todo here..." maxlength="140" rows="4" value=""><%= user.Todos[0].title  %></textarea>
+              <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
+            </div>
+            <br><br>
+            <input class="btn btn-primary pull-right" type="submit" value="Submit">
+          </form>
+        </div>
+      </div>
+    </div>
+    <%- include ./partials/footer.ejs %>
+  </body>
+</html>
